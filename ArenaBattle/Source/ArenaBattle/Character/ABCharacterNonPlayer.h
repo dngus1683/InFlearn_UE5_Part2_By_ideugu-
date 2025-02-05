@@ -10,7 +10,7 @@
 /**
  * 
  */
-UCLASS(config = ArenaBattle)
+UCLASS()
 class ARENABATTLE_API AABCharacterNonPlayer : public AABCharacterBase
 {
 	GENERATED_BODY()
@@ -19,15 +19,6 @@ public:
 	AABCharacterNonPlayer();
 
 protected:
-	virtual void PostInitializeComponents() override;
-
-
-protected:
 	void SetDead() override;
-	void NPCMeshLoadCompleted();
 
-	UPROPERTY(config)
-	TArray<FSoftObjectPath> NPCMeshes;
-
-	TSharedPtr<FStreamableHandle> NPCMeshHandle;
 };
