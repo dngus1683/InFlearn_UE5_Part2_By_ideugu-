@@ -8,9 +8,9 @@
 #include "ABCharacterNonPlayer.generated.h"
 
 /**
- * 
+ *
  */
-UCLASS()
+UCLASS(config = ArenaBattle)
 class ARENABATTLE_API AABCharacterNonPlayer : public AABCharacterBase
 {
 	GENERATED_BODY()
@@ -19,6 +19,14 @@ public:
 	AABCharacterNonPlayer();
 
 protected:
-	void SetDead() override;
+	virtual void PostInitializeComponents() override;
 
+protected:
+	void SetDead() override;
+	void NPCMeshLoadCompleted();
+
+	UPROPERTY(config)
+	TArray<FSoftObjectPath> NPCMeshes;
+
+	TSharedPtr<FStreamableHandle> NPCMeshHandle;
 };
