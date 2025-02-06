@@ -58,7 +58,8 @@ protected:
 	void ProcessComboCommand();
 
 	void ComboActionBegin();
-	void ComboActionEnd(class UAnimMontage* TargetMontage, bool IsProperlyEnded) ;
+	void ComboActionEnd(class UAnimMontage* TargetMontage, bool IsProperlyEnded);
+	virtual void NotifyComboActionEnd();
 	void SetComboCheckTimer();
 	void ComboCheck();
 
