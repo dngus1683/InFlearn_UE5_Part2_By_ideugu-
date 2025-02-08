@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Game/AGameModeBase.h"
+#include "Player/ABPlayerController.h"
 
 
 AAGameModeBase::AAGameModeBase()
@@ -27,4 +28,43 @@ AAGameModeBase::AAGameModeBase()
 	{
 		PlayerControllerClass = PlayerControllerClassRef.Class;
 	}
+
+	ClearScore = 3;
+	CurrentScore = 0;
+	bIsCleared = false;
+}
+
+void AAGameModeBase::OnPlayerScoreChanged(int32 NewPlayerScore)
+{
+	CurrentScore = NewPlayerScore;
+
+	AABPlayerController* ABPlayerController = Cast<AABPlayerController>(GetWorld()->GetFirstPlayerController());
+	if (ABPlayerController)
+	{
+		ABPlayerController->GameScoreChanged(CurrentScore);
+	}
+
+	if (CurrentScore >= ClearScore)
+	{
+		bIsCleared = true;
+
+		if (ABPlayerController)
+		{
+			ABPlayerController->GameClear();
+		}
+	}
+}
+
+void AAGameModeBase::OnPlayerDead()
+{
+	AABPlayerController* ABPlayerController = Cast<AABPlayerController>(GetWorld()->GetFirstPlayerController());
+	if (ABPlayerController)
+	{
+		ABPlayerController->GameOver();
+	}
+}
+
+bool AAGameModeBase::IsGameCleared()
+{
+	return bIsCleared;
 }
